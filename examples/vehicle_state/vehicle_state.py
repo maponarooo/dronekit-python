@@ -202,7 +202,7 @@ print(" Remove Vehicle attribute observer")
 vehicle.remove_attribute_listener('*', wildcard_callback)
     
 
-
+"""
 # Get/Set Vehicle Parameters
 print("\nRead and write parameters")
 print(" Read vehicle param 'THR_MIN': %s" % vehicle.parameters['THR_MIN'])
@@ -254,7 +254,7 @@ vehicle.mode = VehicleMode("STABILIZE")
 #vehicle.armed = False
 vehicle.parameters['THR_MIN']=130
 vehicle.parameters['THR_MID']=500
-
+"""
 
 #Close vehicle object before exiting script
 print("\nClose vehicle object")
