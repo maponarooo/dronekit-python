@@ -8,7 +8,7 @@
 [![Linux Build Status](https://img.shields.io/circleci/project/dronekit/dronekit-python/master.svg?label=linux)](https://circleci.com/gh/dronekit/dronekit-python) <a href="https://gitter.im/dronekit/dronekit-python?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge"><img align="right" src="https://badges.gitter.im/Join%20Chat.svg"></img></a>
 
 DroneKit-Python helps you create powerful apps for UAVs.
-
+QUAD에 의해 ArduPilot-SITL과 연계하여 테스트 할 수 있도록 예제 프로그램 수정함.
 
 ## Overview
 
