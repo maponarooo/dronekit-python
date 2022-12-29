@@ -33,6 +33,8 @@ vehicle = connect('127.0.0.1:14550', wait_ready=True)
 print("Mode: %s" % vehicle.mode.name)
 ```
 
+python vehicle_state.py --connect udpin:0.0.0.0:14550
+
 Once you've got DroneKit set up, the [guide](https://dronekit-python.readthedocs.io/en/latest/guide/index.html) explains how to perform operations like taking off and flying the vehicle. You can also try out most of the tasks by running the [examples](https://dronekit-python.readthedocs.io/en/latest/examples/index.html).
 
 ## Resources
