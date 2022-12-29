@@ -10,6 +10,8 @@
 DroneKit-Python helps you create powerful apps for UAVs.   
 QUAD에 의해 ArduPilot-SITL과 연계하여 테스트 할 수 있도록 예제 프로그램 수정함.   
 
+python vehicle_state.py --connect udpin:0.0.0.0:14550   
+
 ## Overview
 
 DroneKit-Python (formerly DroneAPI-Python) contains the python language implementation of DroneKit.
