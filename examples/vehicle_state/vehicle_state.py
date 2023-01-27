@@ -69,6 +69,10 @@ print(" Local Location: %s" % vehicle.location.local_frame)
 print(" Attitude: %s" % vehicle.attitude)
 print(" Velocity: %s" % vehicle.velocity)
 print(" GPS: %s" % vehicle.gps_0)
+print(" GPS HDOP: %s" % vehicle.gps_0.eph)
+print(" GPS VDOP: %s" % vehicle.gps_0.epv)
+print(" GPS fix type: %s" % vehicle.gps_0.fix_type)
+print(" GPS satellites_visible: %s" % vehicle.gps_0.satellites_visible)
 print(" Gimbal status: %s" % vehicle.gimbal)
 print(" Battery: %s" % vehicle.battery)
 print(" EKF OK?: %s" % vehicle.ekf_ok)
@@ -125,8 +129,6 @@ while not vehicle.mode.name=='GUIDED':  #Wait until mode has changed
 while not vehicle.is_armable:
     print(" Waiting for vehicle to initialise...")
     time.sleep(1)
-    # If required, you can provide additional information about initialisation
-    # using `vehicle.gps_0.fix_type` and `vehicle.mode.name`.
     
 #print "\nSet Vehicle.armed=True (currently: %s)" % vehicle.armed 
 #vehicle.armed = True
@@ -159,8 +161,6 @@ time.sleep(2)
 print(" Remove Vehicle.attitude observer")    
 # Remove observer added with `add_attribute_listener()` specifying the attribute and callback function
 vehicle.remove_attribute_listener('attitude', attitude_callback)
-
-
         
 # Add mode attribute callback using decorator (callbacks added this way cannot be removed).
 print("\nAdd `mode` attribute callback/observer using decorator") 
@@ -182,9 +182,6 @@ try:
     vehicle.remove_attribute_listener('mode', decorated_mode_callback)
 except:
     print(" Exception: Cannot remove observer added using decorator")
-
-
-
  
 # Demonstrate getting callback on any attribute change
 def wildcard_callback(self, attr_name, value):
@@ -201,37 +198,35 @@ print(" Remove Vehicle attribute observer")
 # Remove observer added with `add_attribute_listener()`
 vehicle.remove_attribute_listener('*', wildcard_callback)
     
-
-"""
 # Get/Set Vehicle Parameters
 print("\nRead and write parameters")
-print(" Read vehicle param 'THR_MIN': %s" % vehicle.parameters['THR_MIN'])
+print(" Read vehicle param 'SIM_INS_THR_MIN': %s" % vehicle.parameters['SIM_INS_THR_MIN'])
 
-print(" Write vehicle param 'THR_MIN' : 10")
-vehicle.parameters['THR_MIN']=10
-print(" Read new value of param 'THR_MIN': %s" % vehicle.parameters['THR_MIN'])
+print(" Write vehicle param 'SIM_INS_THR_MIN' : 10")
+vehicle.parameters['SIM_INS_THR_MIN']=10
+print(" Read new value of param 'SIM_INS_THR_MIN': %s" % vehicle.parameters['SIM_INS_THR_MIN'])
 
-
+'''
 print("\nPrint all parameters (iterate `vehicle.parameters`):")
 for key, value in vehicle.parameters.iteritems():
     print(" Key:%s Value:%s" % (key,value))
-    
+'''    
 
 print("\nCreate parameter observer using decorator")
 # Parameter string is case-insensitive
 # Value is cached (listeners are only updated on change)
 # Observer added using decorator can't be removed.
  
-@vehicle.parameters.on_attribute('THR_MIN')  
+@vehicle.parameters.on_attribute('SIM_INS_THR_MIN')  
 def decorated_thr_min_callback(self, attr_name, value):
     print(" PARAMETER CALLBACK: %s changed to: %s" % (attr_name, value))
 
 
-print("Write vehicle param 'THR_MIN' : 20 (and wait for callback)")
-vehicle.parameters['THR_MIN']=20
+print("Write vehicle param 'SIM_INS_THR_MIN' : 20 (and wait for callback)")
+vehicle.parameters['SIM_INS_THR_MIN']=20
 for x in range(1,5):
     #Callbacks may not be updated for a few seconds
-    if vehicle.parameters['THR_MIN']==20:
+    if vehicle.parameters['SIM_INS_THR_MIN']==20:
         break
     time.sleep(1)
 
@@ -243,18 +238,18 @@ def any_parameter_callback(self, attr_name, value):
 
 #Add observer for the vehicle's any/all parameters parameter (defined using wildcard string ``'*'``)
 vehicle.parameters.add_attribute_listener('*', any_parameter_callback)     
-print(" Change THR_MID and THR_MIN parameters (and wait for callback)")    
-vehicle.parameters['THR_MID']=400  
-vehicle.parameters['THR_MIN']=30
+print(" Change ACRO_THR_MID and SIM_INS_THR_MIN parameters (and wait for callback)")    
+vehicle.parameters['ACRO_THR_MID']=400  
+vehicle.parameters['SIM_INS_THR_MIN']=30
 
 
 ## Reset variables to sensible values.
 print("\nReset vehicle attributes/parameters and exit")
 vehicle.mode = VehicleMode("STABILIZE")
 #vehicle.armed = False
-vehicle.parameters['THR_MIN']=130
-vehicle.parameters['THR_MID']=500
-"""
+vehicle.parameters['SIM_INS_THR_MIN']=130
+vehicle.parameters['ACRO_THR_MID']=500
+
 
 #Close vehicle object before exiting script
 print("\nClose vehicle object")
@@ -265,7 +260,6 @@ if sitl is not None:
     sitl.stop()
 
 print("Completed")
-
 
 
 
